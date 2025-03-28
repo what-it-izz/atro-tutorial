@@ -1,3 +1,5 @@
+Deployed to https://what-it-izz.github.io/atro-tutorial/ 
+
 # Astro Starter Kit: Minimal
 
 ```sh
