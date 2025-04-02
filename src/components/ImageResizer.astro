@@ -3,13 +3,16 @@ import { Image } from "astro:assets";
 
 const {
   src,
-  alt = 'testing',
-  width,
-  height,
+  alt,
+  aspectRatio = 16 / 9, // default aspect ratio
   format = 'webp',
   sizes = '100vw',
   loading = 'lazy',
 } = Astro.props;
+
+// Calculate dimensions based on aspect ratio and screen width (100vw)
+const width = 1280; // base width for generating responsive images
+const height = Math.round(width / aspectRatio);
 ---
 
 <Image
@@ -20,4 +23,5 @@ const {
   format={format}
   sizes={sizes}
   loading={loading}
+  style="width: 100%; height: auto; display: block;"
 />
