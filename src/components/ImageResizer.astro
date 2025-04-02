@@ -4,24 +4,44 @@ import { Image } from "astro:assets";
 const {
   src,
   alt,
-  aspectRatio = 16 / 9, // default aspect ratio
+  aspectRatio = 16 / 9,
   format = 'webp',
-  sizes = '100vw',
   loading = 'lazy',
+  className = '',
 } = Astro.props;
 
-// Calculate dimensions based on aspect ratio and screen width (100vw)
-const width = 1280; // base width for generating responsive images
-const height = Math.round(width / aspectRatio);
+// This width just tells Astro how to generate the images; it doesn't control display size
+const baseWidth = 1920;
+const baseHeight = Math.round(baseWidth / aspectRatio);
 ---
 
-<Image
-  src={src}
-  alt={alt}
-  width={width}
-  height={height}
-  format={format}
-  sizes={sizes}
-  loading={loading}
-  style="width: 100%; height: auto; display: block;"
-/>
+<style>
+  .responsive-image-wrapper {
+    width: 100%;
+    aspect-ratio: var(--aspect-ratio);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .responsive-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+</style>
+
+<div
+  class={`responsive-image-wrapper ${className}`}
+  style={`--aspect-ratio: ${aspectRatio};  border: 2px dashed red; background-color: rgba(255, 0, 0, 0.1);`}
+>
+  <Image
+    src={src}
+    alt={alt}
+    width={baseWidth}
+    height={baseHeight}
+    format={format}
+    sizes="100vw"
+    loading={loading}
+  />
+</div>
